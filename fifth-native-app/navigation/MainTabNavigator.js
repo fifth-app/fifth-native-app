@@ -4,8 +4,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import RoutineScreen from '../screens/RoutineScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen', },
@@ -35,42 +34,25 @@ HomeStack.navigationOptions = {
 
 HomeStack.path = '';
 
-const LinksStack = createStackNavigator(
+const RoutineStack = createStackNavigator(
   {
-    Links: LinksScreen,
+    Links: RoutineScreen
   },
   config
 );
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+RoutineStack.navigationOptions = {
+  tabBarLabel: "Routine",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon style={{ display: "none" }} focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
   ),
 };
 
-LinksStack.path = '';
-
-const SettingsStack = createStackNavigator(
-  {
-    Settings: SettingsScreen,
-  },
-  config
-);
-
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
-  ),
-};
-
-SettingsStack.path = '';
+RoutineStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
-  LinksStack,
-  SettingsStack,
+  RoutineStack,
 });
 
 tabNavigator.path = '';
