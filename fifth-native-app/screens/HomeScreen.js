@@ -8,11 +8,14 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Button
 } from 'react-native';
 
 import { MonoText } from '../components/StyledText';
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
+  const { navigate } = props.navigation;
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -32,7 +35,7 @@ export default function HomeScreen() {
         <View style={styles.getStartedContainer}>
           <DevelopmentModeNotice />
 
-          <Text style={styles.getStartedText}>Get started by opening!!!!</Text>
+          <Text style={styles.getStartedText}>Get started by opening</Text>
 
           <View
             style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
@@ -57,6 +60,11 @@ export default function HomeScreen() {
         <Text style={styles.tabBarInfoText}>
           This is a tab bar. You can edit it in:
         </Text>
+
+        <Button
+          title="Create a Routine"
+          onPress={() => navigate('Links', { name: 'Jane' })}
+        />
 
         <View
           style={[styles.codeHighlightContainer, styles.navigationFilename]}>
