@@ -1,17 +1,7 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Button
-} from 'react-native';
+import { Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { MonoText } from '../components/StyledText';
 
 export default function HomeScreen(props) {
   const { navigate } = props.navigation;
@@ -24,10 +14,9 @@ export default function HomeScreen(props) {
         <View style={styles.welcomeContainer}>
           <Image
             source={
-              __DEV__
-                ? require('../assets/images/robot-dev.png')
-                : require('../assets/images/robot-prod.png')
+              require('../assets/images/fifth.png')
             }
+            resizeMode='cover'
             style={styles.welcomeImage}
           />
         </View>
@@ -36,12 +25,14 @@ export default function HomeScreen(props) {
       </ScrollView>
 
       <View bottom={styles.buttonContainer.bottom}>
-        <Button
-          color="red"
-          styles={styles}
-          title="Create a Routine"
+        <TouchableOpacity 
+          style={styles.button}
           onPress={() => navigate('Links', { name: 'Jane' })}
-        />
+        >
+          <Text style={styles.buttonText}>
+              Create a Routine
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -107,10 +98,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   welcomeImage: {
-    width: 100,
-    height: 80,
+    width: 350,
+    height: 280,
     resizeMode: 'contain',
-    marginTop: 3,
+    marginTop: 100,
     marginLeft: -10,
   },
   getStartedContainer: {
@@ -174,10 +165,17 @@ const styles = StyleSheet.create({
     color: '#2e78b7',
   },
   button: {
-    backgroundColor: "red",
-    color: "green",
+    backgroundColor: "white",
+    // color: "purple",
   },
   buttonContainer: {
-    bottom: 300,
+    bottom: 200,
+  },
+  buttonText: {
+    alignContent: 'center',
+    fontSize: 27,
+    fontFamily: "sans-serif-light",
+    textAlign: "center",
+    fontStyle: "italic"
   }
 });
