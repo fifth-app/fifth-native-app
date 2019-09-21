@@ -1,5 +1,5 @@
-import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import React, { useState } from 'react';
+import { ScrollView, StyleSheet, Text, Button } from 'react-native';
 
 var moves = {
   'fifth_rest_state': {
@@ -35,9 +35,20 @@ var moves = {
 }
 
 export default function RoutineScreen() {
+  const movesArray = Object.values(moves);
+  const [currentMove, setCurrentMove] = useState('');
+
   return (
     <ScrollView style={styles.container}>
-      <Text>Hello</Text>
+      <Button title="Tendu" onPress={setCurrentMove("Tendu")} />
+
+      currentMove ===
+      {
+        movesArray.map((move, index) => {
+          console.log(movesArray[index]);
+          return <Button title={movesArray[index].official_name} key={index} />
+        })
+      }
     </ScrollView>
   );
 }
