@@ -1,33 +1,63 @@
-import React from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Timer } from 'react-native-stopwatch-timer';
-
+import React, { Component, useEffect, useState } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { Stopwatch } from 'react-native-stopwatch-timer';
+// TODO: Update stopwatch so only displays count
+// TODO: Allow different tempo
+// TODO: Use react-metronome module
+// TODO: What are hooks?
+class StopScreen extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            stopwatchStart: true,
+            currTime: 0
+        };
+        this.stopStopwatch.bind(this);
+    }
+    stopStopwatch() {
+        this.setState({stopwatchStart: false})
+    }
+}    
 export default function TimerScreen(props) {
     const { navigate } = props.navigation;
+    var [currTime, setCurrTime] = useState(0);
+    var [start, setStart] = useState(true);
+    useEffect( () => {
+        if (currTime >= 8) {
+            setStart(false)
+        }
+    }, [currTime])
     return (
         <View style={styles.container}>
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}/>
-  
-        <View bottom={styles.buttonContainer.bottom}>
-          <Timer totalDuration={10000} start={true} />
-          {/* <TouchableHighlight onPress={this.toggleTimer}>
-              <Text style={{fontSize: 30}}>{!this.state.timerStart ? "Start" : "Stop"}</Text>
-          </TouchableHighlight> */}
-          <TouchableOpacity 
-            style={styles.button}
-            onPress={() => navigate('Links', { name: 'Jane' })}>
-            <Text style={styles.buttonText}>
-                Create a Routine
-            </Text>
-          </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <Stopwatch start={start} options={options} getTime={(time) => setCurrTime(timeIntSeconds(time))} />
         </View>
       </View>
 
   );
+  function timeIntSeconds(timeString) {
+    //   Only works up to 60 counts--TODO: Use regex to expand
+      return Number(time.substring(time.length-2))
+  }
 }
 
+const options = {
+    container: {
+        alignItems: 'center',
+        backgroundColor: '#FFF',
+        padding: 5,
+        borderRadius: 5,
+        width: 220,
+      },
+      text: {
+        fontSize: 30,
+        fontFamily: "sans-serif-light",
+        color: '#000',
+      }
+}
 TimerScreen.navigationOptions = {
   title: 'Timer',
 };
@@ -39,26 +69,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   contentContainer: {
-    paddingTop: 30,
-  },
-  welcomeContainer: {
+    paddingTop: 15,
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 350,
-    height: 280,
-    resizeMode: 'contain',
-    marginTop: 100,
-    marginLeft: -10,
+    alignContent: 'center'
   },
   button: {
     backgroundColor: "white",
     // color: "purple",
   },
   buttonContainer: {
-    bottom: 200,
+    bottom: 500,
+    alignItems: 'center',
   },
   buttonText: {
     alignContent: 'center',
