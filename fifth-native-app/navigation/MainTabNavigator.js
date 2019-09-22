@@ -1,3 +1,4 @@
+// import 'ballet';
 import React from 'react';
 import { Platform } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
@@ -5,7 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import RoutineScreen from '../screens/RoutineScreen';
 import TimerScreen from '../screens/TimerScreen';
-
+// import ballet-shoes from '../assets/images';
 const config = Platform.select({
   web: { headerMode: 'screen', },
   default: {},
@@ -27,8 +28,7 @@ HomeStack.navigationOptions = {
         Platform.OS === 'ios'
           ? `ios-information-circle${focused ? '' : '-outline'}`
           : 'md-information-circle'
-      }
-    />
+      }/>
   ),
 };
 
@@ -71,6 +71,7 @@ const tabNavigator = createBottomTabNavigator({
   RoutineStack,
   TimerStack
 });
+
 
 tabNavigator.path = '';
 

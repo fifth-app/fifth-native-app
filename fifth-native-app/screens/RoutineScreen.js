@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, ScrollView, StyleSheet } from 'react-native';
+import { Button, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 var moves = {
   'fifth_rest_state': {
@@ -22,26 +22,20 @@ var moves = {
   },
   'tendu_flex': {
     'next_moves': [
-      'tendu_basic',
-      'degage',
-      'grand_battement'],
+      'tendu_basic'],
     'official_name': 'Flex',
     'poss_starting': false
 
   },
   'tendu_down': {
     'next_moves': [
-      'tendu_basic',
-      'degage',
-      'grand_battement'],
+      'tendu_basic'],
     'official_name': 'Foot down',
     'poss_starting': false
   },
   'tendu_in': {
     'next_moves': [
-      'tendu_basic',
-      'degage',
-      'grand_battement'],
+      'tendu_basic'],
     'official_name': 'Turn in',
     'poss_starting': false
   },
@@ -64,24 +58,74 @@ var moves = {
 }
 
 export default function RoutineScreen() {
-  const movesArray = Object.keys(moves);
+  const [startingMovesArray, setStartingMovesArray] = useState(Object.keys(moves));
   const [currentMove, setCurrentMove] = useState('');
+  const [nextMoves, setNextMoves] = useState([]);
+  const [routineMoves, setRoutineMoves] = useState([]);
 
-  // const handleClick = {
-  //   // console.log("hello")
-  // }
-
+  const handleClick = (move) => {
+    setCurrentMove(move);
+    setNextMoves(moves[move].next_moves);
+    setRoutineMoves([...routineMoves, move])
+  }
+  const handleStartingClick = (move) => {
+    setCurrentMove(move);
+    setNextMoves(moves[move].next_moves);
+    setRoutineMoves([...routineMoves, move])
+    setStartingMovesArray([]);
+  }
   return (
     <ScrollView style={styles.container}>
+      { routineMoves.length === 0 ? null :
+      <View>
+        <Text>Current routine</Text>
+       {
+          routineMoves.map((move, index) => {
+            return (<TouchableOpacity key={index} title={moves[move].official_name} onPress={() => handleClick(move)}>
+              <Text style={styles.buttonText}>
+                {moves[move].official_name}
+              </Text>
+            </TouchableOpacity>) 
+          })
+        }
+      </View>
+      }
+
+      { startingMovesArray.length > 0 || routineMoves.length >= 8 ? null :
+        <View>
+          <Text>Choose your next move!</Text>
+        {
+            nextMoves.map((move, index) => {
+              return (<TouchableOpacity key={index} title={moves[move].official_name} onPress={() => handleClick(move)}>
+                <Text style={styles.buttonText}>
+                  {moves[move].official_name}
+                </Text>
+              </TouchableOpacity>) 
+            })}
+        </View>
+      }
+
+       { startingMovesArray.length === 0 ? null :
+      <View>
+        <Text>Choose your first move!</Text>
+        {
+        startingMovesArray.map((move, index) => {
+          return moves[move].poss_starting ? (<TouchableOpacity key={index} title={moves[move].official_name} onPress={() => handleStartingClick(move)}>
+            <Text style={styles.buttonText}>
+              {moves[move].official_name}
+            </Text>
+          </TouchableOpacity>) : null;
+        })}
+      </View>
+      }
+
       {
-        movesArray.map((move, index) => {
-          console.log(moves[move].poss_starting)
-          return moves[move].poss_starting ? <Button key={index} title={move} onPress={() => setCurrentMove(move)} /> : null;
-        })
+        routineMoves.length === 8 ?
+        <Button title="start"/> : null
       }
     </ScrollView>
-  );
-}
+    );
+  }
 
 RoutineScreen.navigationOptions = {
   title: 'Routine',
@@ -92,5 +136,20 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 15,
     backgroundColor: '#fff',
+    alignContent: 'flex-end'
   },
+  button: {
+    backgroundColor: "white",
+    // margin: 
+    // borderColor: "grey",
+    // borderWidth: 1
+  },
+  buttonText: {
+    alignContent: 'center', 
+    fontSize: 30,
+    fontFamily: "sans-serif-light",
+    textAlign: "center",
+    fontStyle: "italic",
+    margin: 30
+  }
 });
