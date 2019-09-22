@@ -40,7 +40,7 @@ export default function TimerScreen(props) {
   );
   function timeIntSeconds(timeString) {
     //   Only works up to 60 counts--TODO: Use regex to expand
-      return Number(time.substring(time.length-2))
+      return Number(timeString.substring(timeString.length-2))
   }
 }
 
