@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, Button } from 'react-native';
+import { Button, ScrollView, StyleSheet } from 'react-native';
 
 var moves = {
   'fifth_rest_state': {
