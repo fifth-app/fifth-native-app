@@ -4,7 +4,7 @@ import { createBottomTabNavigator, createStackNavigator } from 'react-navigation
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import RoutineScreen from '../screens/RoutineScreen';
-
+import TimerScreen from '../screens/TimerScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen', },
@@ -50,9 +50,26 @@ RoutineStack.navigationOptions = {
 
 RoutineStack.path = '';
 
+const TimerStack = createStackNavigator(
+  {
+    Links: TimerScreen  
+  },
+  config
+)
+
+TimerStack.navigationOptions = {
+  tabBarLabel: "Timer", 
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon style={{ display: "none"}} focused={focused} name={Platform.OS === 'ios' ? 'ios-link': 'md-link'} /> 
+  ),
+}
+
+TimerStack.path = '';
+
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
   RoutineStack,
+  TimerStack
 });
 
 tabNavigator.path = '';
